@@ -1,0 +1,97 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="AbstractFlightBehaviour" Collapsed="true">
+    <Position X="5.25" Y="12.5" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>EwAACAMAgBQAAYQgEFCEMAACmBBAENQQQJTEIBCFACw=</HashCode>
+      <FileName>Assets\Scripts Non Monobehaviour\AbstractFlightBehaviour.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Missile" Collapsed="true">
+    <Position X="3.75" Y="14" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AACAAAAQAAAAEAAAAACAQhAAAAAAAQACAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts Non Monobehaviour\Missile.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PlayerCraft" Collapsed="true">
+    <Position X="7.25" Y="14" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAQAAAAAAABAAEAAQAAAAEAAAAA=</HashCode>
+      <FileName>Assets\Scripts Non Monobehaviour\PlayerCraft.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TargetInfo" Collapsed="true">
+    <Position X="9.25" Y="15" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AQAAEQEAAAAAAAQAAAAAAQAAAAAAAIAQAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts Non Monobehaviour\TargetInfo.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="MissileLauncher" Collapsed="true">
+    <Position X="3.75" Y="15" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AA0AAAKIACAAoAAIAIAAAAAAAAAAAAAAQAAIAoCAAAA=</HashCode>
+      <FileName>Assets\Scripts Monobehaviour\MissileLauncher.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PlayerLauncher" Collapsed="true">
+    <Position X="7.25" Y="15" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>IAaAEAIAIjAAAAAAIAAIARCCgCGAAAQgWAAAApBQEAA=</HashCode>
+      <FileName>Assets\Scripts Monobehaviour\PlayerLauncher.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RadarHUD" Collapsed="true">
+    <Position X="9.25" Y="15.75" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>IACJBAACAiAAAAAAoAAAAYkDAwAABAAACACCACQCAAA=</HashCode>
+      <FileName>Assets\Scripts Monobehaviour\RadarHUD.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Reply" Collapsed="true">
+    <Position X="9.25" Y="16.75" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>QARAAAAAACAAAAAAAAAAAAACAAAAAAAAAAAAAAAAACQ=</HashCode>
+      <FileName>Assets\Scripts Monobehaviour\Reply.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MainAndTailRotorManager" Collapsed="true">
+    <Position X="9.25" Y="17.75" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAIEAAAiAAAAAAAAAAAAAAgAAAAAAEAAAAAAAAAgA=</HashCode>
+      <FileName>Assets\Scripts Monobehaviour\MainAndTailRotorManager.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="NetworkManagerSplashScreen" Collapsed="true">
+    <Position X="12.75" Y="14" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>QgUAEBCAQCgAABMqCAOYCAAxgTgCACwAgpKBhgAE4YA=</HashCode>
+      <FileName>Assets\Scripts Monobehaviour\NetworkManagerSplashScreen.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MissileInTheAir" Collapsed="true">
+    <Position X="12.75" Y="15.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAEAAAAAAEAAQABAAAEAAAAAAAAAQAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts Non Monobehaviour\MissileInTheAir.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PlayerInfo" Collapsed="true">
+    <Position X="12.75" Y="15" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAEAAAAAAAAAAAAAAAEAAAAAAAAAAAAACAAAAAgAAAA=</HashCode>
+      <FileName>Assets\Scripts Non Monobehaviour\PlayerInfo.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Interface Name="IFlightBehaviour" Collapsed="true">
+    <Position X="3.5" Y="12.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAABAAIAACGAAAAIAAAAAAAAABAAQ=</HashCode>
+      <FileName>Assets\Scripts Non Monobehaviour\IFlightBehaviour.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

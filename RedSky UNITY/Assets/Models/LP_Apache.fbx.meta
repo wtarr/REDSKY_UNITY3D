@@ -1,0 +1,84 @@
+fileFormatVersion: 2
+guid: 284cc1c63d9906949b38958a560ac224
+ModelImporter:
+  serializedVersion: 15
+  fileIDToRecycleName:
+    100000: Apache_Body
+    100002: MainRotor
+    100004: Tail_Rotor
+    100006: Sun
+    100008: //RootNode
+    100010: Camera
+    400000: Apache_Body
+    400002: MainRotor
+    400004: Tail_Rotor
+    400006: Sun
+    400008: //RootNode
+    400010: Camera
+    2300000: Apache_Body
+    2300002: MainRotor
+    2300004: Tail_Rotor
+    2300006: //RootNode
+    3300000: Apache_Body
+    3300002: MainRotor
+    3300004: Tail_Rotor
+    3300006: //RootNode
+    4300000: Apache_Body
+    4300002: Tail_Rotor
+    4300004: MainRotor
+    6400000: MainRotor
+    6400002: Tail_Rotor
+    6400004: Apache_Body
+    6400006: //RootNode
+    7400000: Default Take //// LP_Apache
+    11100000: //RootNode
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 0
+    bakeSimulation: 0
+    animationCompression: 1
+    animationRotationError: .5
+    animationPositionError: .5
+    animationScaleError: .5
+    animationWrapMode: 0
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 2
+    meshCompression: 0
+    addColliders: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+  tangentSpace:
+    normalSmoothAngle: 60
+    splitTangentsAcrossUV: 1
+    normalImportMode: 0
+    tangentImportMode: 1
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    human: []
+    skeleton: []
+    handles: []
+    armTwist: .5
+    foreArmTwist: .5
+    upperLegTwist: .5
+    legTwist: .5
+    armStretch: .0500000007
+    legStretch: .0500000007
+    feetSpacing: 0
+    rootMotionBoneName: 
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  additionalBone: 1
+  animationType: 1
+  userData: 
