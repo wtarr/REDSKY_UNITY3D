@@ -43,11 +43,14 @@ public class NetworkManagerSplashScreen : MonoBehaviour
     public static List<GameObject> spawnPoints;
     public static List<MissileInTheAir> hotMissileList;
     private float btnX, btnY, btnW, btnH, textfieldH, textfieldW, textfieldX, textfieldY, playerNameLabelX, playerNameLabelY, playerNameLabelH, playerNameLabelW;
-    private string gameName = "RedSky", password = "Openup", playerName = string.Empty;
-    private bool waitForServerResponse;
+    private string gameName = "RedSky", password = "Openup", playerName = string.Empty;    
     private List<HostData> hostdata;
-    private bool startServerCalled = false;
-    private bool listen = false, iamserver = false, iamclient = false;
+    private bool waitForServerResponse,
+                 startServerCalled = false,
+                 listen = false,
+                 iamserver = false,
+                 iamclient = false,
+                 failedToConnectToMasterServer = false;
     private List<string> lanHosts;
     private int maxNumOfPlayers = 4;
     private int port = 25001;
@@ -177,6 +180,9 @@ public class NetworkManagerSplashScreen : MonoBehaviour
             }
 
         }
+
+        if (failedToConnectToMasterServer)
+            GUI.Label(new Rect(10, 10, 200, 20), "Failed To Connect to Master Server - Check Internet Connectivity or Firewall Settings");
     } 
     #endregion
       
@@ -194,11 +200,22 @@ public class NetworkManagerSplashScreen : MonoBehaviour
     {
         if (!startServerCalled)
         {
-            startServerCalled = true;
-            bool shouldUseNAT = !Network.HavePublicAddress();
-            Network.InitializeServer(maxNumOfPlayers, port, shouldUseNAT);
-            Network.incomingPassword = password;
-            MasterServer.RegisterHost(gameName, "RedSky Multiplayer Game", "This is a third year project demonstration");
+            
+                startServerCalled = true;
+                bool shouldUseNAT = !Network.HavePublicAddress();
+                NetworkConnectionError ne = Network.InitializeServer(maxNumOfPlayers, port, shouldUseNAT);
+                if (ne == NetworkConnectionError.NoError)
+                {
+                    Network.incomingPassword = password;                    
+                    MasterServer.RegisterHost(gameName, "RedSky Multiplayer Game", "This is a third year project demonstration");
+                    
+                }
+                else
+                {
+                    Debug.Log("Failed to initialize Server - Check network connection");
+                }
+
+           
         }
     } 
     #endregion
@@ -402,6 +419,20 @@ public class NetworkManagerSplashScreen : MonoBehaviour
         LoadScene();
         SpawnPlayer();
 
+    } 
+    #endregion
+
+    #region On Failed To Connect
+    void OnFailedToConnect(NetworkConnectionError nce)
+    {
+        Debug.Log("Failed to connect - Check that you have network connectivity and Firewall settings are correct");
+    } 
+    #endregion
+
+    #region On Failed To Connect To Master Server
+    void OnFailedToConnectToMasterServer(NetworkConnectionError nce)
+    {
+        Debug.Log("Failed to connect to the master server " + nce.ToString());
     } 
     #endregion
 
