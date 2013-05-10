@@ -121,7 +121,7 @@ public class RadarHUD : MonoBehaviour
                     if (Vector3.Dot(meToTarget, playerCraft.EntityObj.transform.forward) > 0)
                     {
 
-                        PlayerInfo pi = NetworkManagerSplashScreen.playerInfoList.Find(p => p.ViewID == tar.TargetID);
+                        PlayerInfo pi = NetworkManagerSplashScreen.PlayerInfoList.Find(p => p.ViewID == tar.TargetID);
 
                         if (pi != null)
                         {

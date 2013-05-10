@@ -273,7 +273,7 @@ public class PlayerLauncher : MonoBehaviour
     #region Add to Hot Missile List method
     private void AddToHotMissileList(NetworkViewID missile, NetworkViewID target, NetworkViewID launcher)
     {
-        NetworkManagerSplashScreen.hotMissileList.Add(new MissileInTheAir(missile, target, launcher));
+        NetworkManagerSplashScreen.HotMissileList.Add(new MissileInTheAir(missile, target, launcher));
     } 
     #endregion
 
@@ -415,18 +415,18 @@ public class PlayerLauncher : MonoBehaviour
 
         List<NetworkViewID> destroyList = new List<NetworkViewID>();
 
-        for (int i = 0; i < NetworkManagerSplashScreen.hotMissileList.Count; i++)
+        for (int i = 0; i < NetworkManagerSplashScreen.HotMissileList.Count; i++)
         {
-            if (NetworkManagerSplashScreen.hotMissileList[i].TheTargetId == other.gameObject.GetComponent<MissileLauncher>().ThisMissile.PrimaryTarget.TargetID && NetworkManagerSplashScreen.hotMissileList[i].TheLaunchersId == other.gameObject.GetComponent<MissileLauncher>().Owner.networkView.viewID)
+            if (NetworkManagerSplashScreen.HotMissileList[i].TheTargetId == other.gameObject.GetComponent<MissileLauncher>().ThisMissile.PrimaryTarget.TargetID && NetworkManagerSplashScreen.HotMissileList[i].TheLaunchersId == other.gameObject.GetComponent<MissileLauncher>().Owner.networkView.viewID)
             {
-                destroyList.Add(NetworkManagerSplashScreen.hotMissileList[i].TheMissileId);
+                destroyList.Add(NetworkManagerSplashScreen.HotMissileList[i].TheMissileId);
             }
         }
 
         foreach (var item in destroyList)
         {
             //networkView.RPC
-            NetworkManagerSplashScreen.hotMissileList.RemoveAll(o => o.TheMissileId == item);
+            NetworkManagerSplashScreen.HotMissileList.RemoveAll(o => o.TheMissileId == item);
 
             Network.Destroy(item);
         }
@@ -450,9 +450,9 @@ public class PlayerLauncher : MonoBehaviour
         playerCraft.Velocity = Vector3.zero;
 
         System.Random r = new System.Random();
-        int ranNum = r.Next(0, NetworkManagerSplashScreen.spawnPoints.Count);
+        int ranNum = r.Next(0, NetworkManagerSplashScreen.SpawnPoints.Count);
 
-        playerCraft.EntityObj.transform.position = NetworkManagerSplashScreen.spawnPoints[ranNum].transform.position;
+        playerCraft.EntityObj.transform.position = NetworkManagerSplashScreen.SpawnPoints[ranNum].transform.position;
         playerCraft.Velocity = Vector3.zero;
     } 
     #endregion
