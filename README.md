@@ -5,9 +5,9 @@ REDSKY_UNITY3D
 
 Multiplayer
 
--Master Server
+- Master Server
 
--LAN (incl discovery)
+- LAN (incl discovery)
 
 
 Rather inefficent proof of concept radar system
