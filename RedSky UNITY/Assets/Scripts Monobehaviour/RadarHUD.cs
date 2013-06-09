@@ -11,35 +11,34 @@ using System.Collections.Generic;
 public class RadarHUD : MonoBehaviour
 {
     #region  Class State
-    public Texture radarScreenImage, friendlyImage, targetImage, rotateBeamSpriteSheet, targetHighlight, primaryTargetHighlighter;
-    public GUIStyle textStyle;
-    private Texture2D missileTexture2d;
-    private PlayerCraft playerCraft; // pointer to the owner
-    private Camera cam;
+    public Texture RadarScreenImage, FriendlyImage, TargetImage, RotateBeamSpriteSheet, TargetHighlight, PrimaryTargetHighlighter;
+    public GUIStyle TextStyle;
+    private Texture2D _missileTexture2D;
+    private Camera _cam;
 
-    private Vector3 targetRelToScreen;
-    private float offset, clock;
+    private Vector3 _targetRelToScreen;
+    private float _offset, _clock;
 
     private int
-        radarScreenTextureHeightWidth, // radar screen/ radar sweep 
-        targetHUDHighlight,
-        targetRadarBlip,
-        padding,
-        radarLeft,
-        radarTop,
-        radarCenterX,
-        radarCenterY,
-        delay,
-        cycle;
+        _radarScreenTextureHeightWidth, // radar screen/ radar sweep 
+        _targetHudHighlight,
+        _targetRadarBlip,
+        _padding,
+        _radarLeft,
+        _radarTop,
+        _radarCenterX,
+        _radarCenterY,
+        _delay,
+        _cycle;
 
-    private int scale = 5; 
+    private const int Scale = 5;
+
     #endregion
 
     #region Properties
-    public PlayerCraft PlayerCraft
-    {
-        set { playerCraft = value; }
-    }
+
+    public PlayerCraft PlayerCraft { private get; set; }
+
     #endregion
 
     #region Start method
@@ -49,34 +48,34 @@ public class RadarHUD : MonoBehaviour
         //Going to create a incode texture rather importing a texture to display missiles
 
         //Fill the custom missile texture2d with color
-        missileTexture2d = new Texture2D(10, 30);
-        var textureArray = missileTexture2d.GetPixels();
+        _missileTexture2D = new Texture2D(10, 30);
+        var textureArray = _missileTexture2D.GetPixels();
         for (int i = 0; i < textureArray.Length; i++)
         {
             textureArray[i] = new Color(255, 180, 0); // orangey
         }
-        missileTexture2d.SetPixels(textureArray);
-        missileTexture2d.Apply();
+        _missileTexture2D.SetPixels(textureArray);
+        _missileTexture2D.Apply();
 
         // Find the main camera
-        cam = GameObject.FindGameObjectWithTag("MainCamera").camera;
+        _cam = GameObject.FindGameObjectWithTag("MainCamera").camera;
 
         // set up variables such as widths and padding offsets
-        radarScreenTextureHeightWidth = 200;
-        targetHUDHighlight = 100;
-        targetRadarBlip = 100;
-        padding = 10;
-        radarLeft = 10;
-        radarTop = Screen.height - (radarScreenTextureHeightWidth + padding);
+        _radarScreenTextureHeightWidth = 200;
+        _targetHudHighlight = 100;
+        _targetRadarBlip = 100;
+        _padding = 10;
+        _radarLeft = 10;
+        _radarTop = Screen.height - (_radarScreenTextureHeightWidth + _padding);
 
-        radarCenterX = radarLeft + (radarScreenTextureHeightWidth / 2);
-        radarCenterY = radarTop + (radarScreenTextureHeightWidth / 2);
+        _radarCenterX = _radarLeft + (_radarScreenTextureHeightWidth / 2);
+        _radarCenterY = _radarTop + (_radarScreenTextureHeightWidth / 2);
 
-        offset = 0.0833f;
+        _offset = 0.0833f;
 
-        delay = 3;
+        _delay = 3;
 
-        cycle = 1;
+        _cycle = 1;
 
     } 
     #endregion
@@ -85,40 +84,40 @@ public class RadarHUD : MonoBehaviour
     void OnGUI()
     {
         // Radar overlay
-        GUI.DrawTexture(new Rect(radarLeft, radarTop, radarScreenTextureHeightWidth, radarScreenTextureHeightWidth), radarScreenImage);
+        GUI.DrawTexture(new Rect(_radarLeft, _radarTop, _radarScreenTextureHeightWidth, _radarScreenTextureHeightWidth), RadarScreenImage);
 
         //Radar sprite sheet
-        GUI.DrawTextureWithTexCoords(new Rect(radarLeft, radarTop, radarScreenTextureHeightWidth, radarScreenTextureHeightWidth), rotateBeamSpriteSheet, new Rect(offset * cycle, 0, offset, 1));
+        GUI.DrawTextureWithTexCoords(new Rect(_radarLeft, _radarTop, _radarScreenTextureHeightWidth, _radarScreenTextureHeightWidth), RotateBeamSpriteSheet, new Rect(_offset * _cycle, 0, _offset, 1));
 
         //Missiles remaining
         GUI.Box(new Rect(10, 10, 150, 70), "");
 
-        GUI.Label(new Rect(15, 10, 200, 20), "Missiles Remaining", textStyle);
+        GUI.Label(new Rect(15, 10, 200, 20), "Missiles Remaining", TextStyle);
 
-        for (int i = 0; i < (playerCraft.MissileTotal - playerCraft.MissileSelection); i++)
+        for (int i = 0; i < (PlayerCraft.MissileTotal - PlayerCraft.MissileSelection); i++)
         {
-            GUI.DrawTexture(new Rect(15 + (2 * (i * padding)), 30, missileTexture2d.width, missileTexture2d.height), missileTexture2d);
+            GUI.DrawTexture(new Rect(15 + (2 * (i * _padding)), 30, _missileTexture2D.width, _missileTexture2D.height), _missileTexture2D);
         }
                 
         // Display the Radar Screen with target blips.  Also display the target highlighter
-        if (playerCraft.Targets.Count > 0)
+        if (PlayerCraft.Targets.Count > 0)
         {
-            foreach (TargetInfo tar in playerCraft.Targets)
+            foreach (TargetInfo tar in PlayerCraft.Targets)
             {
                 if (tar.TargetID.ToString() != string.Empty)
                 {
                     // Convert global position to a local positon for displaying on radar screen
-                    Vector3 local = playerCraft.EntityObj.transform.InverseTransformDirection(tar.TargetPosition - playerCraft.EntityObj.transform.position);
+                    Vector3 local = PlayerCraft.EntityObj.transform.InverseTransformDirection(tar.TargetPosition - PlayerCraft.EntityObj.transform.position);
                     // Convert the targets positon to a screen position for positioning the highlighter 
-                    targetRelToScreen = cam.WorldToScreenPoint(tar.TargetPosition);
+                    _targetRelToScreen = _cam.WorldToScreenPoint(tar.TargetPosition);
 
                     // Always draw
-                    GUI.DrawTexture(new Rect(radarCenterX + (local.x / scale) - (targetRadarBlip / 2), radarCenterY - (local.z / scale) - (targetRadarBlip / 2), targetRadarBlip, targetRadarBlip), targetImage);
+                    GUI.DrawTexture(new Rect(_radarCenterX + (local.x / Scale) - (_targetRadarBlip / 2), _radarCenterY - (local.z / Scale) - (_targetRadarBlip / 2), _targetRadarBlip, _targetRadarBlip), TargetImage);
 
                     //check that we are facing the target
-                    Vector3 meToTarget = tar.TargetPosition - playerCraft.Position;
+                    Vector3 meToTarget = tar.TargetPosition - PlayerCraft.Position;
                     // Do Dot product check to ensure that player is facing the target before painting the highligther on screen
-                    if (Vector3.Dot(meToTarget, playerCraft.EntityObj.transform.forward) > 0)
+                    if (Vector3.Dot(meToTarget, PlayerCraft.EntityObj.transform.forward) > 0)
                     {
 
                         PlayerInfo pi = NetworkManagerSplashScreen.PlayerInfoList.Find(p => p.ViewID == tar.TargetID);
@@ -126,13 +125,13 @@ public class RadarHUD : MonoBehaviour
                         if (pi != null)
                         {
                             GUI.contentColor = Color.green;
-                            GUI.Label(new Rect(targetRelToScreen.x - (targetHUDHighlight / 2), (Screen.height - targetRelToScreen.y - (targetHUDHighlight / 2)) - 10, targetHUDHighlight, targetHUDHighlight), pi.PlayerName);
+                            GUI.Label(new Rect(_targetRelToScreen.x - (_targetHudHighlight / 2), (Screen.height - _targetRelToScreen.y - (_targetHudHighlight / 2)) - 10, _targetHudHighlight, _targetHudHighlight), pi.PlayerName);
                             GUI.contentColor = Color.black;
                         }
-                        GUI.DrawTexture(new Rect(targetRelToScreen.x - targetHUDHighlight / 2, Screen.height - targetRelToScreen.y - targetHUDHighlight / 2, targetHUDHighlight, targetHUDHighlight), targetHighlight);
+                        GUI.DrawTexture(new Rect(_targetRelToScreen.x - _targetHudHighlight / 2, Screen.height - _targetRelToScreen.y - _targetHudHighlight / 2, _targetHudHighlight, _targetHudHighlight), TargetHighlight);
 
                         if (tar.IsPrimary)
-                            GUI.DrawTexture(new Rect(targetRelToScreen.x - targetHUDHighlight / 2, Screen.height - targetRelToScreen.y - targetHUDHighlight / 2, targetHUDHighlight, targetHUDHighlight), primaryTargetHighlighter);
+                            GUI.DrawTexture(new Rect(_targetRelToScreen.x - _targetHudHighlight / 2, Screen.height - _targetRelToScreen.y - _targetHudHighlight / 2, _targetHudHighlight, _targetHudHighlight), PrimaryTargetHighlighter);
                     }
                 }
             }
@@ -146,15 +145,15 @@ public class RadarHUD : MonoBehaviour
     void FixedUpdate()
     {
 
-        clock++;
+        _clock++;
 
-        if (clock >= delay)
+        if (_clock >= _delay)
         {
-            clock = 0;
-            cycle++;
+            _clock = 0;
+            _cycle++;
 
-            if (cycle > 12)
-                cycle = 1;
+            if (_cycle > 12)
+                _cycle = 1;
         }
 
     } 
