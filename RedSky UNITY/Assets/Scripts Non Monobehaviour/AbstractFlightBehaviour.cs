@@ -5,145 +5,58 @@
  * behaviour
  *****************************************/
 
-using System;
 using UnityEngine;
 using System.Collections.Generic;
 
 public abstract class AbstractFlightBehaviour : IFlightBehaviour
 {
     #region Class State
-	private GameObject entityObj; 
-	private TargetInfo primaryTarget;
-	private float health;
-	private Vector3 position;
-	private Quaternion rotation;
-	private Vector3 velocity;
-	private Vector3 acceleration;
-    private Vector3 targetVelocityVector;    
-    private float atmosphericDrag;
-    private float currentSpeed;
-    private float fuelRemaining;
-    private float fuelBurnRate;
-    private float maxSpeed;    
-    private float targetSpeedMetersPerSecond;
-    private float thrustValue;
-	private float decelerationValue;
-	private float pitchAngle;
-	private float rollAngle;
-	private float yawAngle;
-    private List<TargetInfo> targets;
+
+    private Vector3 _position;
+	private Quaternion _rotation;
+    private float _currentSpeed;
+    private float _fuelRemaining;
+    private float _fuelBurnRate;
+    private float _targetSpeedMetersPerSecond;
+
     #endregion
 
     #region Properties	
-	public GameObject EntityObj {
-		get {return this.entityObj;}
-		set {entityObj = value;}
-	}
 
-	public TargetInfo PrimaryTarget {
-		get {return this.primaryTarget;}
-		set {primaryTarget = value;}
-	}
-	
-	public float Health {
-		get {return this.health;}
-		set {health = value;}
-	}
-	
-	public Vector3 Position {
-		get {return this.EntityObj.transform.position;}
-		set {this.EntityObj.transform.position = value;}
-	}
+    public GameObject EntityObj { get; set; }
+
+    public TargetInfo PrimaryTarget { get; set; }
+
+    public Vector3 Position {
+		get {return EntityObj.transform.position;}
+    }
 
 	public Quaternion Rotation {
-		get {return this.EntityObj.transform.rotation;}
-		set {this.EntityObj.transform.rotation = value;}
-	}
-	public Vector3 Velocity {
-		get {return this.velocity;}
-		set {velocity = value;}
-	}	
-
-	public Vector3 Acceleration {
-		get {return this.acceleration;}
-		set {acceleration = value;}
-	}	
-
-    public Vector3 TargetVelocityVector
-    {
-        get { return targetVelocityVector; }
-        set { targetVelocityVector = value; }
-    }
-	
-    public float AtmosphericDrag
-    {
-        get { return atmosphericDrag; }
-        set { atmosphericDrag = value; }
-    }
-
-    public float CurrentSpeed
-    {
-        get { return currentSpeed; }
-        set { currentSpeed = value; }
-    }
-
-    public float FuelRemaining
-    {
-        get { return fuelRemaining; }
-        set { fuelRemaining = value; }
-    }
-
-    public float FuelBurnRate
-    {
-        get { return fuelBurnRate; }
-        set { fuelBurnRate = value; }
-    }
-
-    public float MaxSpeed
-    {
-        get { return maxSpeed; }
-        set { maxSpeed = value; }
-    }  
-    
-    public float TargetSpeedMetersPerSecond
-    {
-        get { return targetSpeedMetersPerSecond; }
-        set { targetSpeedMetersPerSecond = value; }
-    }
-    
-    public float ThrustValue
-    {
-        get { return thrustValue; }
-        set { thrustValue = value; }
-    } 
-
-	public float DecelerationValue {
-		get {return this.decelerationValue;}
-		set {decelerationValue = value;}
+		get {return EntityObj.transform.rotation;}
 	}
 
-	public float PitchAngle {
-		get {return this.pitchAngle;}
-		set {pitchAngle = value;}
-	}
-	
-	
+    public Vector3 Velocity { get; set; }
 
-	public float RollAngle {
-		get {return this.rollAngle;}
-		set {rollAngle = value;}
-	}
+    public Vector3 Acceleration { get; set; }
 
-	public float YawAngle {
-		get {return this.yawAngle;}
-		set {yawAngle = value;}
-	}
+    public Vector3 TargetVelocityVector { get; set; }
 
-    public List<TargetInfo> Targets
-    {
-        get { return targets; }
-        set { targets = value; }
-    }
+    public float AtmosphericDrag { get; set; }
+
+    public float MaxSpeed { get; set; }
+
+    public float ThrustValue { get; set; }
+
+    public float DecelerationValue { get; set; }
+
+    public float PitchAngle { get; set; }
+
+
+    public float RollAngle { get; set; }
+
+    public float YawAngle { get; set; }
+
+    public List<TargetInfo> Targets { get; set; }
 
     #endregion
 

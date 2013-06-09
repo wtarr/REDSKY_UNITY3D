@@ -6,41 +6,29 @@
 
 #region Using Statements
 using UnityEngine;
-using System.Collections;
-using System.Collections.Generic;
-using System;
-using System.Linq; 
+
 #endregion
 
 public class MissileLauncher : MonoBehaviour
 {
     #region Class State
-    public GameObject missileRadarPrefab, explosionPrefab;
-    private GameObject missileRadar;
-    private Missile thisMissile;
-    private GameObject owner;
+    public GameObject MissileRadarPrefab;
+    private GameObject _missileRadar;
 
-    private Vector3 missileVelocityVectorToIntercept;
-    private Vector3 commonInterceptVector;
-    private float sweepAngleRate = 1000;
-    private bool locked = false;
-    private Vector3 launched;
-    private float timeOfLastCall;
-    private float timeNow;    
+    private Vector3 _missileVelocityVectorToIntercept;
+    private Vector3 _commonInterceptVector;
+    private const float SweepAngleRate = 1000;
+    private Vector3 _launched;
+    private float _timeOfLastCall;
+    private float _timeNow;    
     #endregion
 
     #region Properties
-    public Missile ThisMissile
-    {
-        get { return thisMissile; }
-        set { thisMissile = value; }
-    }
 
-    public GameObject Owner
-    {
-        get { return owner; }
-        set { owner = value; }
-    } 
+    public Missile ThisMissile { get; set; }
+
+    public GameObject Owner { get; set; }
+
     #endregion
 
     #region Start Method
@@ -51,31 +39,31 @@ public class MissileLauncher : MonoBehaviour
         if (networkView.isMine)
         {
 
-            missileRadar = (GameObject)Instantiate(missileRadarPrefab, transform.position, transform.rotation);
-            missileRadar.transform.parent = transform;
+            _missileRadar = (GameObject)Instantiate(MissileRadarPrefab, transform.position, transform.rotation);
+            _missileRadar.transform.parent = transform;
 
-            launched = transform.position;
+            _launched = transform.position;
 
             // calculate the intercept vector which is the target and missile will collide at time t based on missiles maxspeed
-            commonInterceptVector = thisMissile.CalculateInterceptVector(thisMissile.PrimaryTarget.TargetPosition, thisMissile.TargetVelocityVector, thisMissile.Position, thisMissile.MaxSpeed);
+            _commonInterceptVector = ThisMissile.CalculateInterceptVector(ThisMissile.PrimaryTarget.TargetPosition, ThisMissile.TargetVelocityVector, ThisMissile.Position, ThisMissile.MaxSpeed);
 
             // calculate the velocity vector required for the missile to travel that will reach intercept
-            missileVelocityVectorToIntercept = thisMissile.PlotCourse(commonInterceptVector, thisMissile.Position);
+            _missileVelocityVectorToIntercept = ThisMissile.PlotCourse(_commonInterceptVector, ThisMissile.Position);
 
             // create a rigid body for our missile
-            thisMissile.EntityObj.AddComponent<Rigidbody>();
+            ThisMissile.EntityObj.AddComponent<Rigidbody>();
             // create a sphere collider for our missile
-            thisMissile.EntityObj.AddComponent<SphereCollider>();
+            ThisMissile.EntityObj.AddComponent<SphereCollider>();
 
-            SphereCollider sc = (SphereCollider)thisMissile.EntityObj.collider;
+            SphereCollider sc = (SphereCollider)ThisMissile.EntityObj.collider;
 
             sc.radius = 0.5f; //set its intital det range
             sc.isTrigger = true;
 
 
-            thisMissile.EntityObj.rigidbody.useGravity = false;
-            thisMissile.EntityObj.rigidbody.angularDrag = 0;
-            thisMissile.EntityObj.rigidbody.mass = 1;
+            ThisMissile.EntityObj.rigidbody.useGravity = false;
+            ThisMissile.EntityObj.rigidbody.angularDrag = 0;
+            ThisMissile.EntityObj.rigidbody.mass = 1;
 
         }
 
@@ -90,39 +78,39 @@ public class MissileLauncher : MonoBehaviour
         {
 
             //Start sweeping
-            missileRadar.transform.RotateAround(this.transform.position, this.transform.up, sweepAngleRate * Time.deltaTime);
+            _missileRadar.transform.RotateAround(this.transform.position, this.transform.up, SweepAngleRate * Time.deltaTime);
 
             //If missile can lock on same target as player craft then launch!!!
 
 
-            if (thisMissile.PrimaryTarget != null)// && locked == true)
+            if (ThisMissile.PrimaryTarget != null)// && locked == true)
             {
 
-                commonInterceptVector = thisMissile.CalculateInterceptVector(thisMissile.PrimaryTarget.TargetPosition, thisMissile.TargetVelocityVector, thisMissile.Position, thisMissile.MaxSpeed);
+                _commonInterceptVector = ThisMissile.CalculateInterceptVector(ThisMissile.PrimaryTarget.TargetPosition, ThisMissile.TargetVelocityVector, ThisMissile.Position, ThisMissile.MaxSpeed);
 
-                Debug.DrawLine(launched, commonInterceptVector, Color.blue, 0.25f, false);
+                Debug.DrawLine(_launched, _commonInterceptVector, Color.blue, 0.25f, false);
 
-                missileVelocityVectorToIntercept = thisMissile.PlotCourse(commonInterceptVector, thisMissile.Position);
+                _missileVelocityVectorToIntercept = ThisMissile.PlotCourse(_commonInterceptVector, ThisMissile.Position);
 
                 // Check if path to intercept is still viable...
                 // if not we will check if in detonation range
                 // if not in detonation range we will continue on old velocity and hope for better intercept chance
-                if (commonInterceptVector == Vector3.zero)
+                if (_commonInterceptVector == Vector3.zero)
                 {
 
                     //the path is not viable so lets check if missile is in detonation range of target					
-                    if (thisMissile.InDetonationRange(thisMissile.Position, thisMissile.PrimaryTarget.TargetPosition))
+                    if (ThisMissile.InDetonationRange(ThisMissile.Position, ThisMissile.PrimaryTarget.TargetPosition))
                     {
                         Debug.Log("In det range");
-                        SphereCollider myCollider = thisMissile.EntityObj.transform.GetComponent<SphereCollider>();
-                        myCollider.radius = thisMissile.DetonationRange;
+                        SphereCollider myCollider = ThisMissile.EntityObj.transform.GetComponent<SphereCollider>();
+                        myCollider.radius = ThisMissile.DetonationRange;
 
                     }
 
                 }
 
-                thisMissile.EntityObj.transform.forward = Vector3.Normalize(missileVelocityVectorToIntercept);
-                thisMissile.EntityObj.transform.position += missileVelocityVectorToIntercept * Time.deltaTime;
+                ThisMissile.EntityObj.transform.forward = Vector3.Normalize(_missileVelocityVectorToIntercept);
+                ThisMissile.EntityObj.transform.position += _missileVelocityVectorToIntercept * Time.deltaTime;
 
             }
 
@@ -141,27 +129,24 @@ public class MissileLauncher : MonoBehaviour
         {            
 
             if (other.gameObject.name.Contains("player_replying_to") &&                
-                other.gameObject.transform.parent.networkView.viewID.ToString().Equals(thisMissile.PrimaryTarget.TargetID.ToString()))
-            {                
-                locked = true;
-
-                if (other.gameObject.transform.position != thisMissile.PrimaryTarget.TargetPosition)
+                other.gameObject.transform.parent.networkView.viewID.ToString().Equals(ThisMissile.PrimaryTarget.TargetID.ToString()))
+            {
+                if (other.gameObject.transform.position != ThisMissile.PrimaryTarget.TargetPosition)
                 {
                     // Calculate the targets realtime velocity
-                    timeNow = Time.realtimeSinceStartup;
-                    thisMissile.OldTargetPosition = thisMissile.PrimaryTarget.TargetPosition;
-                    thisMissile.PrimaryTarget.TargetPosition = other.gameObject.transform.position;
-                    if (timeNow > 0 && timeOfLastCall > 0)
-                        thisMissile.TargetVelocityVector = thisMissile.CalculateVelocityVector(thisMissile.OldTargetPosition, thisMissile.PrimaryTarget.TargetPosition, (timeNow - timeOfLastCall));
+                    _timeNow = Time.realtimeSinceStartup;
+                    ThisMissile.OldTargetPosition = ThisMissile.PrimaryTarget.TargetPosition;
+                    ThisMissile.PrimaryTarget.TargetPosition = other.gameObject.transform.position;
+                    if (_timeNow > 0 && _timeOfLastCall > 0)
+                        ThisMissile.TargetVelocityVector = ThisMissile.CalculateVelocityVector(ThisMissile.OldTargetPosition, ThisMissile.PrimaryTarget.TargetPosition, (_timeNow - _timeOfLastCall));
                     
-                    timeOfLastCall = timeNow;
+                    _timeOfLastCall = _timeNow;
                 }
 
 
             }
             else
             {
-                locked = false;
             }
         }
 

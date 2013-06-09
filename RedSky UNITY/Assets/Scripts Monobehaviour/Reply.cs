@@ -5,17 +5,16 @@
 
 #region Using Statements
 using UnityEngine;
-using System.Collections; 
 #endregion
 
 public class Reply : MonoBehaviour
 {
     #region Class State
-    public Material transparent;
-    private int TTL = 10;
-    private float tick;
-    private Vector3 scale;
-    public string message; 
+    public Material Transparent;
+    private int _TTL = 10;
+    private float _tick;
+    private Vector3 _scale;
+    public string Message; 
     #endregion      
 
     #region Start method
@@ -23,8 +22,8 @@ public class Reply : MonoBehaviour
     void Start()
     {
 
-        tick = 1;
-        scale = new Vector3(150, 150, 150);
+        _tick = 1;
+        _scale = new Vector3(150, 150, 150);
 
         gameObject.AddComponent<Rigidbody>();
         gameObject.AddComponent<SphereCollider>();
@@ -45,9 +44,9 @@ public class Reply : MonoBehaviour
 
         //r.enabled = false;
 
-        r.material = transparent;
+        r.material = Transparent;
 
-        gameObject.name = "" + message + "_reply";
+        gameObject.name = "" + Message + "_reply";
     } 
     #endregion
 
@@ -59,12 +58,12 @@ public class Reply : MonoBehaviour
         if (transform.position == Vector3.zero)
             Destroy(gameObject);
 
-        TTL--;
+        _TTL--;
 
-        gameObject.transform.localScale = scale * tick;
-        tick++;
+        gameObject.transform.localScale = _scale * _tick;
+        _tick++;
 
-        if (TTL <= 0)
+        if (_TTL <= 0)
             Destroy(gameObject);
 
 

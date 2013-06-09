@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using NUnit.Framework;
 using UnityEngine;
 
@@ -9,18 +6,18 @@ using UnityEngine;
 [TestFixture]
 public class MissileFunctionTesting
 {
-    Missile m;
+    Missile _m;
 
     [TestFixtureSetUp]
     public void Init()
     {
-        m = new Missile();
+        _m = new Missile();
     }
 
     [Test]
     public void Test_That_Missile_is_Loading()
     {
-        Assert.IsNotNull(m = new Missile());
+        Assert.IsNotNull(_m = new Missile());
     }
 
     [Test]
@@ -29,16 +26,15 @@ public class MissileFunctionTesting
         //While missile is in a stationary position, feed in two recorded positions of the target and test
         //that the missile can calculate the velocity of its target correctly.
 
-        Vector3 targetVectorExpected = new Vector3(3, 0, 0);
-        Vector3 actualTargetVelVector;
-        TargetInfo test = new TargetInfo(new NetworkViewID(), new Vector3(0, 1, 0));
+        var targetVectorExpected = new Vector3(3, 0, 0);
+        
 
-        m.OldTargetPosition = new Vector3(0, 1, 0); // old
+        _m.OldTargetPosition = new Vector3(0, 1, 0); // old
 
-        m.PrimaryTarget.TargetPosition = new Vector3(3, 1, 0); // new
+        _m.PrimaryTarget.TargetPosition = new Vector3(3, 1, 0); // new
 
 
-        actualTargetVelVector = m.CalculateVelocityVector(m.OldTargetPosition, m.PrimaryTarget.TargetPosition, 1);
+        Vector3 actualTargetVelVector = _m.CalculateVelocityVector(_m.OldTargetPosition, _m.PrimaryTarget.TargetPosition, 1);
 
         Assert.AreEqual(targetVectorExpected, actualTargetVelVector);
 
@@ -54,13 +50,13 @@ public class MissileFunctionTesting
 
 
         TargetInfo test = new TargetInfo(new NetworkViewID(), new Vector3(150, 200, -300)); // A
-        m.PrimaryTarget = test;
+        _m.PrimaryTarget = test;
 
-        m.TargetVelocityVector = new Vector3(34, 42, 23); // Av
+        _m.TargetVelocityVector = new Vector3(34, 42, 23); // Av
 
-        m.MaxSpeed = 60f;
+        _m.MaxSpeed = 60f;
 
-        Vector3 intercept = m.CalculateInterceptVector(m.PrimaryTarget.TargetPosition, m.TargetVelocityVector, missilePositionMock, m.MaxSpeed);
+        Vector3 intercept = _m.CalculateInterceptVector(_m.PrimaryTarget.TargetPosition, _m.TargetVelocityVector, missilePositionMock, _m.MaxSpeed);
 
         Console.WriteLine(intercept);
 
@@ -81,15 +77,15 @@ public class MissileFunctionTesting
 
 
         TargetInfo test = new TargetInfo(new NetworkViewID(), new Vector3(150, 200, -300)); // A
-        m.PrimaryTarget = test;
+        _m.PrimaryTarget = test;
 
-        m.TargetVelocityVector = new Vector3(34, 42, 23); // Av
+        _m.TargetVelocityVector = new Vector3(34, 42, 23); // Av
 
-        m.MaxSpeed = 60f;
+        _m.MaxSpeed = 60f;
 
-        Vector3 intercept = m.CalculateInterceptVector(m.PrimaryTarget.TargetPosition, m.TargetVelocityVector, missilePositionMock, m.MaxSpeed);
+        Vector3 intercept = _m.CalculateInterceptVector(_m.PrimaryTarget.TargetPosition, _m.TargetVelocityVector, missilePositionMock, _m.MaxSpeed);
 
-        Vector3 plotInterceptVector = m.PlotCourse(intercept, missilePositionMock);
+        Vector3 plotInterceptVector = _m.PlotCourse(intercept, missilePositionMock);
 
         Assert.AreEqual(expected.x, plotInterceptVector.x, 0.1f);
         Assert.AreEqual(expected.y, plotInterceptVector.y, 0.1f);
@@ -105,12 +101,12 @@ public class MissileFunctionTesting
 
         TargetInfo test = new TargetInfo(new NetworkViewID(), new Vector3(14, 1, 0));
 
-        m.PrimaryTarget = test;
+        _m.PrimaryTarget = test;
 
-        Assert.IsTrue(m.InDetonationRange(missileMockPosition,
-            m.PrimaryTarget.TargetPosition), string.Format("{0}",
+        Assert.IsTrue(_m.InDetonationRange(missileMockPosition,
+            _m.PrimaryTarget.TargetPosition), string.Format("{0}",
             Vector3.Distance(missileMockPosition,
-            m.PrimaryTarget.TargetPosition)));
+            _m.PrimaryTarget.TargetPosition)));
 
     }
 
@@ -123,13 +119,13 @@ public class MissileFunctionTesting
 
         TargetInfo test = new TargetInfo(new NetworkViewID(), new Vector3(129, 1, 0));
 
-        m.PrimaryTarget = test;
+        _m.PrimaryTarget = test;
 
-        Assert.IsFalse(m.InDetonationRange(missileMockPosition,
-            m.PrimaryTarget.TargetPosition),
+        Assert.IsFalse(_m.InDetonationRange(missileMockPosition,
+            _m.PrimaryTarget.TargetPosition),
             string.Format("{0}",
             Vector3.Distance(missileMockPosition,
-            m.PrimaryTarget.TargetPosition)));
+            _m.PrimaryTarget.TargetPosition)));
 
     }
 

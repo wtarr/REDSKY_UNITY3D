@@ -5,32 +5,25 @@
 
 #region Using Statements
 using UnityEngine;
-using System.Collections; 
 #endregion
 
 public class MainAndTailRotorManager : MonoBehaviour {
 
     #region Class State
-    public GameObject mainRotor, tailRotor;
-    private Vector3 verticalAxis, horizontalAxis;
-    private float speedToRotate; 
+    public GameObject MainRotor, IailRotor;
+    private Vector3 _verticalAxis;
+    private const float SpeedToRotate = 2000f;
+
     #endregion
 
-    #region Start method
-    void Start()
-    {
-        speedToRotate = 2000f;
-    } 
-    #endregion
     
     #region Fixed Update method
     void FixedUpdate()
     {
 
-        verticalAxis = Vector3.Cross(transform.up, transform.right);
-        horizontalAxis = Vector3.Cross(transform.up, transform.forward);
-        mainRotor.transform.RotateAround(mainRotor.transform.position, verticalAxis, speedToRotate * Time.deltaTime);
-        tailRotor.transform.RotateAround(tailRotor.transform.position, transform.up, speedToRotate * Time.deltaTime);
+        _verticalAxis = Vector3.Cross(transform.up, transform.right);
+        MainRotor.transform.RotateAround(MainRotor.transform.position, _verticalAxis, SpeedToRotate * Time.deltaTime);
+        IailRotor.transform.RotateAround(IailRotor.transform.position, transform.up, SpeedToRotate * Time.deltaTime);
     } 
     #endregion
 }
