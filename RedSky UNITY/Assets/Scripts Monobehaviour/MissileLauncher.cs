@@ -129,7 +129,7 @@ public class MissileLauncher : MonoBehaviour
         {            
 
             if (other.gameObject.name.Contains("player_replying_to") &&                
-                other.gameObject.transform.parent.networkView.viewID.ToString().Equals(ThisMissile.PrimaryTarget.TargetID.ToString()))
+                other.gameObject.transform.parent.networkView.viewID.ToString().Equals(ThisMissile.PrimaryTarget.TargetId.ToString()))
             {
                 if (other.gameObject.transform.position != ThisMissile.PrimaryTarget.TargetPosition)
                 {

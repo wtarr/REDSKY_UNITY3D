@@ -4,18 +4,13 @@
  ****************************************/
 
 #region Using Statements
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using UnityEngine; 
 #endregion
 
 public class PlayerInfo
 {
     #region Class State
-    private string playerName;
-    private NetworkViewID viewID; 
+
     #endregion
 
     #region Constructor
@@ -24,25 +19,19 @@ public class PlayerInfo
 
     }
 
-    public PlayerInfo(string playerName, NetworkViewID viewID)
+    public PlayerInfo(string playerName, NetworkViewID viewId)
     {
-        this.playerName = playerName;
-        this.viewID = viewID;
+        PlayerName = playerName;
+        ViewId = viewId;
     }         
     #endregion
 
     #region Properties
-    public string PlayerName
-    {
-        get { return playerName; }
-        set { playerName = value; }
-    }
 
-    public NetworkViewID ViewID
-    {
-        get { return viewID; }
-        set { viewID = value; }
-    } 
+    public string PlayerName { get; set; }
+
+    public NetworkViewID ViewId { get; set; }
+
     #endregion
 }
 

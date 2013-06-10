@@ -104,7 +104,7 @@ public class RadarHUD : MonoBehaviour
         {
             foreach (TargetInfo tar in PlayerCraft.Targets)
             {
-                if (tar.TargetID.ToString() != string.Empty)
+                if (tar.TargetId.ToString() != string.Empty)
                 {
                     // Convert global position to a local positon for displaying on radar screen
                     Vector3 local = PlayerCraft.EntityObj.transform.InverseTransformDirection(tar.TargetPosition - PlayerCraft.EntityObj.transform.position);
@@ -120,7 +120,7 @@ public class RadarHUD : MonoBehaviour
                     if (Vector3.Dot(meToTarget, PlayerCraft.EntityObj.transform.forward) > 0)
                     {
 
-                        PlayerInfo pi = NetworkManagerSplashScreen.PlayerInfoList.Find(p => p.ViewID == tar.TargetID);
+                        PlayerInfo pi = NetworkManagerSplashScreen.PlayerInfoList.Find(p => p.ViewId == tar.TargetId);
 
                         if (pi != null)
                         {

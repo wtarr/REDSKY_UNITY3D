@@ -10,28 +10,18 @@ using UnityEngine;
 
 public class Missile: AbstractFlightBehaviour
 {
-    #region Class State
-    public Vector3 oldTargetPosition;
-    private float detonationRange = 15f; 
-    #endregion
-
     #region Properties
-    public Vector3 OldTargetPosition
-    {
-        get { return oldTargetPosition; }
-        set { oldTargetPosition = value; }
-    }
 
-    public float DetonationRange
-    {
-        get { return detonationRange; }
-        set { detonationRange = value; }
-    } 
+    public Vector3 OldTargetPosition { get; set; }
+
+    public float DetonationRange { get; set; }
+
     #endregion
 
     #region Constructor
     public Missile()
     {
+        DetonationRange = 15f;
         MaxSpeed = 60f;
         PrimaryTarget = new TargetInfo(new NetworkViewID(), Vector3.zero);
     }     
@@ -100,10 +90,7 @@ public class Missile: AbstractFlightBehaviour
 
         float distance = Vector3.Distance(targetPosition, missilePosition);
 
-        if (distance <= detonationRange)
-            return true;
-        else
-            return false;
+        return distance <= DetonationRange;
     }   
     #endregion
 	

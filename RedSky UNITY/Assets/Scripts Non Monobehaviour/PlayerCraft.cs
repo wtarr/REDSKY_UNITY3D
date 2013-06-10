@@ -3,48 +3,31 @@
  * from the Abstract Flight Behaviour
  * ***********************************/
 
-#region Using Statements
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using UnityEngine; 
-#endregion
-
 public class PlayerCraft : AbstractFlightBehaviour
 {
     #region Class State
-    private Missile[] missileStock;
-    private int missileTotal = 4;    
-    private int missileSelection = 0;
-        
+
+    private const int _missileTotal = 4;
+
     #endregion
 
     #region Properties 
-    public Missile[] MissileStock
-    {
-        get { return missileStock; }
-        set { missileStock = value; }
-    }
 
-    public int MissileSelection
-    {
-        get { return missileSelection; }
-        set { missileSelection = value; }
-    }
+    public Missile[] MissileStock { get; set; }
 
-    public int MissileTotal
-    {
-        get { return missileTotal; }        
-    }
+    public int MissileSelection { get; set; }
+
+    public static int MissileTotal { get { return _missileTotal; } }
+
     #endregion
 
     #region Constructor
     public PlayerCraft()
     {
-        missileStock = new Missile[missileTotal];
+        MissileSelection = 0;
+        MissileStock = new Missile[MissileTotal];
 
-        for (int i = 0; i < missileTotal; i++)
+        for (int i = 0; i < MissileTotal; i++)
         {
             MissileStock[i] = new Missile();
         }

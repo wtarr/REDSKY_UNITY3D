@@ -235,7 +235,7 @@ public class PlayerLauncher : MonoBehaviour
                     //if (Network.isClient)
                     //networkView.RPC("PreLaunchInitialize", RPCMode.AllBuffered, playerCraft.PrimaryTarget.TargetID, playerCraft.PrimaryTarget.TargetPosition);
                     //else
-                    SetUpAndLaunch(_playerCraft.PrimaryTarget.TargetID, _playerCraft.PrimaryTarget.TargetPosition);
+                    SetUpAndLaunch(_playerCraft.PrimaryTarget.TargetId, _playerCraft.PrimaryTarget.TargetPosition);
 
                     _playerCraft.MissileSelection++; // next missile on the rack
 
@@ -314,7 +314,7 @@ public class PlayerLauncher : MonoBehaviour
 
                 TargetInfo t = new TargetInfo(other.gameObject.transform.parent.networkView.viewID, other.gameObject.transform.position); ///////
 
-                int indexOfitem = _playerCraft.Targets.FindIndex(tar => tar.TargetID == t.TargetID); // -1 means its new
+                int indexOfitem = _playerCraft.Targets.FindIndex(tar => tar.TargetId == t.TargetId); // -1 means its new
 
                 if (indexOfitem < 0)
                 {
@@ -325,7 +325,7 @@ public class PlayerLauncher : MonoBehaviour
                 {
                     if (_playerCraft.PrimaryTarget != null)
                     {
-                        if (_playerCraft.PrimaryTarget.TargetID.Equals(t.TargetID))
+                        if (_playerCraft.PrimaryTarget.TargetId.Equals(t.TargetId))
                         {
                             _playerCraft.Targets[indexOfitem].IsPrimary = true;
                         }
@@ -415,7 +415,7 @@ public class PlayerLauncher : MonoBehaviour
 
         for (int i = 0; i < NetworkManagerSplashScreen.HotMissileList.Count; i++)
         {
-            if (NetworkManagerSplashScreen.HotMissileList[i].TheTargetId == other.gameObject.GetComponent<MissileLauncher>().ThisMissile.PrimaryTarget.TargetID && NetworkManagerSplashScreen.HotMissileList[i].TheLaunchersId == other.gameObject.GetComponent<MissileLauncher>().Owner.networkView.viewID)
+            if (NetworkManagerSplashScreen.HotMissileList[i].TheTargetId == other.gameObject.GetComponent<MissileLauncher>().ThisMissile.PrimaryTarget.TargetId && NetworkManagerSplashScreen.HotMissileList[i].TheLaunchersId == other.gameObject.GetComponent<MissileLauncher>().Owner.networkView.viewID)
             {
                 destroyList.Add(NetworkManagerSplashScreen.HotMissileList[i].TheMissileId);
             }
